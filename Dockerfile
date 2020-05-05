@@ -10,7 +10,7 @@ RUN apt-get update && \
 		clang-9 \
 		libclang-9-dev \
 		cmake && \
-	echo 'alias clang="clang-9"' >> $HOME/.bashrc
+	mv /usr/bin/clang-9 /usr/bin/clang
 
 
 # install valgrind
@@ -33,10 +33,13 @@ RUN cd $HOME && \
 # move norm apps inside
 ADD norm /app/norm
 
-# install norm apps
+# install and configure norm apps
 RUN echo 'alias norminette+="python /app/norm/codam-norminette-plus/run.py"' >> $HOME/.bashrc && \
-	cd /app/norm && tar -xf /app/norm/norminette-external-debian-ubuntu.tar && \
-	useradd -g sudo -m -p $(perl -e 'print crypt("password", "salt")') norminette
+	cd /app/norm && tar -xf norminette-external-debian-ubuntu.tar && \
+	sed -i -e 's/sudo apt-get/echo "password" | sudo -S apt-get/' -e 's/\/usr\/local\/bin\/bundle/sudo \/usr\/local\/bin\/bundle/' norminette-external-debian-ubuntu/install.sh && \
+	useradd -g sudo -m -p $(perl -e 'print crypt("password", "salt")') norminette && \
+	export USER=norminette && \
+	cd norminette-external-debian-ubuntu && sudo -u norminette ./install.sh
 
 # move testers inside
 ADD testers /app/testers
@@ -44,6 +47,4 @@ ADD testers /app/testers
 # configure testers to look at ../../libft directory
 RUN /app/testers/libft-war-machine/grademe.sh
 RUN sed -i 's/PATH_LIBFT=..\//PATH_LIBFT=..\/..\/libft/' /app/testers/libft-war-machine/my_config.sh && \
-	sed -i $'s/LIBFTDIR\t=\t..\/libft/LIBFTDIR\t=\t..\/..\/libft/' /app/testers/libft-unit-test/Makefile
-
-USER norminette
+	bash -c "sed -i $'s/LIBFTDIR\t=\t..\/libft/LIBFTDIR\t=\t..\/..\/libft/' /app/testers/libft-unit-test/Makefile"
