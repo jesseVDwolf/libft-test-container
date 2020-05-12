@@ -9,6 +9,7 @@ RUN apt-get update && \
 		git \
 		clang-9 \
 		libclang-9-dev \
+		libc6-dbg \
 		cmake && \
 	mv /usr/bin/clang-9 /usr/bin/clang
 

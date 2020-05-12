@@ -19,9 +19,11 @@ norminetteplus="python $HOME/codam-norminette-plus/run.py"
 
 PROJDIR="libft"
 
-while getopts ":d:" opt; do
+while getopts ":d:n:" opt; do
 	case $opt in
 		d)	PROJDIR="$OPTARG"
+		;;
+		n)	norminetteplus="python $OPTARG"
 		;;
 		\?)	echo -e "$RED Invalid option -$OPTARG" >&2;
 		;;

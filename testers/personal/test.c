@@ -475,7 +475,7 @@ void	test_atoi(void)
 		printf("passed");
 	else	printf("FAILED");
 	printf("\nTest5...");
-	if (ft_atoi("\a\t\b \v\n\r\f123abc") == 123)
+	if (ft_atoi("\t \v\n\r\f123abc") == 123)
 		printf("passed");
 	else	printf("FAILED");
 	printf("\n\n");
