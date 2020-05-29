@@ -243,31 +243,6 @@ void	test_strlen(void)
 	printf("\n\n");
 }
 
-void	test_strcpy(void)
-{
-	char	a[10];
-	char	b[] = "bennie";
-	char	c[10];
-	/*
-	** case 1: copy string to destination
-	** case 2: copy string and overwrite
-	** case 3: check if null byte is written
-	*/
-	printf("Testing ft_strcpy():\nTest1...");
-	if (*((char*)ft_strcpy(a, "jesse")) == 'j' && a[4] == 'e')
-		printf("passed");
-	else	printf("FAILED");
-	printf("\nTest2...");
-	if (*((char*)ft_strcpy(b, "jesse")) == 'j' && a[4] == 'e')
-		printf("passed");
-	else	printf("FAILED");
-	printf("\nTest3...");
-	if (*((char*)ft_strcpy(c, "jesse") + 5) == '\0')
-		printf("passed");
-	else	printf("FAILED");
-	printf("\n\n");
-}
-
 void	test_strlcpy(void)
 {
 	char	a[] = "jesse";
@@ -885,7 +860,6 @@ int		main(void)
 	test_memmove();
 	test_memcmp();
 	test_strlen();
-	test_strcpy();
 	test_strlcpy();
 	test_strlcat();
 	test_strchr();
