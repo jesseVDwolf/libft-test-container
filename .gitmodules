@@ -1,8 +1,8 @@
 [submodule "testers/libft-unit-test"]
-	path = testers/libft-unit-test
+	path = testers/libft/libft-unit-test
 	url = https://github.com/alelievr/libft-unit-test
 [submodule "testers/libft-war-machine"]
-	path = testers/libft-war-machine
+	path = testers/libft/libft-war-machine
 	url = https://github.com/ska42/libft-war-machine.git
 [submodule "norm/codam-norminette-plus"]
 	path = norm/codam-norminette-plus
