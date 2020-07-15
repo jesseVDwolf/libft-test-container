@@ -1,8 +1,8 @@
 FROM ubuntu:18.04
 
 # install main utils
-RUN apt-get update && \
-	apt-get install -y \
+RUN apt-get update \
+	&& apt-get install -y \
 		wget \
 		sudo \
 		build-essential \
@@ -10,9 +10,10 @@ RUN apt-get update && \
 		clang-9 \
 		libclang-9-dev \
 		libc6-dbg \
-		cmake && \
-	mv /usr/bin/clang-9 /usr/bin/clang
-
+		cmake \
+		openssh-server \
+	&& mv /usr/bin/clang-9 /usr/bin/clang \
+	&& mkdir $HOME/.ssh
 
 # install valgrind
 RUN cd /tmp && \
