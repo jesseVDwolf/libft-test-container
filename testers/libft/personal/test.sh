@@ -66,18 +66,18 @@ if [ $? -eq 1 ]; then
 		/app/norm/norminette --version &> /dev/null
 		if [ $? -eq 0 ]; then
 			NORM="/app/norm/norminette"
-		else
-			echo -e "norminette doesn't seem to be installed correctly"
-			read -p "Do you want manually install norminette?" -n 1 -r
-			echo
-			if [[ $REPLY =~ ^[Yy]$ ]]; then
-				echo -e "${G} Install norminette: ${W}";
-				echo -e "1. [HOST]		docker cp /usr/bin/norminette <container-name>:/app/norm/norminette";
-				echo -e "2. [CONTAINER]	mkdir /usr/share/norminette";
-				echo -e "3. [HOST]		docker cp /usr/share/norminette/config.conf <container-name>:/usr/share/norminette/config.conf";
-				echo -e "4. [HOST]		docker cp /usr/share/norminette/Gemfile <container-name>:/usr/share/norminette/Gemfile";
-				exit 5
-			fi
+		fi
+	else
+		echo -e "norminette doesn't seem to be installed correctly"
+		read -p "Do you want manually install norminette? (y/n) " -n 1 -r
+		echo
+		if [[ $REPLY =~ ^[Yy]$ ]]; then
+			echo -e "${G} Install norminette: ${W}";
+			echo -e "1. [CONTAINER]	mkdir /usr/share/norminette";
+			echo -e "2. [HOST]		docker cp /usr/bin/norminette <container-name>:/app/norm/norminette";
+			echo -e "3. [HOST]		docker cp /usr/share/norminette/config.conf <container-name>:/usr/share/norminette/config.conf";
+			echo -e "4. [HOST]		docker cp /usr/share/norminette/Gemfile <container-name>:/usr/share/norminette/Gemfile";
+			exit 5
 		fi
 	fi
 fi
