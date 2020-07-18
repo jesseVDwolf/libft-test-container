@@ -55,6 +55,14 @@ if [ "$1" = "--projdir" ]; then
 		echo -e "${R}invalid --projdir $2${W}";
 		exit 5
 	fi
+elif [ ! -d ${PROJDIR} ]; then
+	echo -e "${R}invalid project directory, use --projdir /path/to/projdir/";
+	exit 5
+elif [ -d ${PROJDIR} ]; then
+	if [ ! -f ${PROJDIR}/Makefile ]; then
+		echo -e "${R}no Makefile found in project directory";
+		exit 5
+	fi
 fi
 
 # if run locally within codam network the installed
