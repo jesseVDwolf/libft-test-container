@@ -76,6 +76,7 @@ if [ $? -eq 1 ]; then
 			NORM="/app/norm/norminette"
 		else
 			echo -e "norminette doesn't seem to be installed correctly\nHave you copied the norminette config.conf and norminette Gemfile?";
+			exit 5
 		fi
 	else
 		echo -e "norminette doesn't seem to be installed correctly"
