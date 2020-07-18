@@ -1,6 +1,7 @@
 # Libft-test-container
 
-A container with external testers and personal tests for the following projects:
+A container with external testers and personal tests.
+> :warning: **Import note: this tester uses git submodules. Make sure to clone this repository with --recurse-submodules so that all external testers are also retrieved successfully**
 
 ## Usage
 Build the image (Make sure you are in the same directory as the Dockerfile):
