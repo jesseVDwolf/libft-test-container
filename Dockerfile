@@ -48,5 +48,6 @@ ADD testers /app/testers
 
 # configure testers to look at ../../libft directory
 RUN bash -c "/app/testers/libft/libft-war-machine/grademe.sh"
+RUN chmod +x /app/testers/libft/personal/test.sh
 RUN sed -i 's/PATH_LIBFT=..\//PATH_LIBFT=..\/..\/libft/' /app/testers/libft/libft-war-machine/my_config.sh && \
 	bash -c "sed -i $'s/LIBFTDIR\t=\t..\/libft/LIBFTDIR\t=\t..\/..\/libft/' /app/testers/libft/libft-unit-test/Makefile"

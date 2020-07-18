@@ -5,7 +5,7 @@ UNAME_S=$(uname -s)
 NORM=$(command -v norminette)
 IWYU=$(command -v include-what-you-use)
 NORMPLUS="python /app/norm/codam-norminette-plus/run.py"
-PROJDIR="libft"
+PROJDIR="../libft"
 MANDATORY_FAIL=false
 BONUS_FAIL=false
 MEMORY_FAIL=false
@@ -52,7 +52,7 @@ if [ "$1" = "--projdir" ]; then
 	if [ -d $2 -a -f $2/Makefile ]; then
 		PROJDIR=$2
 	else
-		echo -e "${R}invalid --projdir $2";
+		echo -e "${R}invalid --projdir $2${W}";
 		exit 5
 	fi
 fi
@@ -66,6 +66,8 @@ if [ $? -eq 1 ]; then
 		/app/norm/norminette --version &> /dev/null
 		if [ $? -eq 0 ]; then
 			NORM="/app/norm/norminette"
+		else
+			echo -e "norminette doesn't seem to be installed correctly\nHave you copied the norminette config.conf and norminette Gemfile?";
 		fi
 	else
 		echo -e "norminette doesn't seem to be installed correctly"
@@ -74,9 +76,10 @@ if [ $? -eq 1 ]; then
 		if [[ $REPLY =~ ^[Yy]$ ]]; then
 			echo -e "${G} Install norminette: ${W}";
 			echo -e "1. [CONTAINER]	mkdir /usr/share/norminette";
-			echo -e "2. [HOST]		docker cp /usr/bin/norminette <container-name>:/app/norm/norminette";
-			echo -e "3. [HOST]		docker cp /usr/share/norminette/config.conf <container-name>:/usr/share/norminette/config.conf";
-			echo -e "4. [HOST]		docker cp /usr/share/norminette/Gemfile <container-name>:/usr/share/norminette/Gemfile";
+			echo -e "2. [HOST]		cp /usr/bin/norminette ~";
+			echo -e "3. [HOST]		docker cp ~/norminette <container-name>:/app/norm/norminette";
+			echo -e "4. [HOST]		docker cp /usr/share/norminette/config.conf <container-name>:/usr/share/norminette/config.conf";
+			echo -e "5. [HOST]		docker cp /usr/share/norminette/Gemfile <container-name>:/usr/share/norminette/Gemfile";
 			exit 5
 		fi
 	fi
