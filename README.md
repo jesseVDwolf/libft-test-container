@@ -1,6 +1,6 @@
 # Libft-test-container
 
-A container with external testers and personal tests.
+A container with external testers and personal tests. It also includes the norminette, [norminetteplus](https://github.com/thijsdejong/codam-norminette-plus), valgrind and [include-what-you-use](https://github.com/include-what-you-use/include-what-you-use/tree/clang_9.0) to check for additional errors.
 > :warning: **Import note: this tester uses git submodules. Make sure to clone this repository with --recurse-submodules so that all external testers are also retrieved successfully**
 
 ## Usage
