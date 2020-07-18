@@ -3,11 +3,13 @@
 CFLAGS="-Wall -Werror -Wextra -fsanitize=address"
 UNAME_S=$(uname -s)
 NORM=$(command -v norminette)
+IWYU=$(command -v include-what-you-use)
 NORMPLUS="python /app/norm/codam-norminette-plus/run.py"
 PROJDIR="libft"
 MANDATORY_FAIL=false
 BONUS_FAIL=false
 MEMORY_FAIL=false
+IWYU_FAIL=false
 
 if [ $UNAME_S = Linux ]; then
 	P='\033[35m'
@@ -26,8 +28,6 @@ elif [ $UNAME_S = Darwin ]; then
 fi
 
 function cleanup {
-	local exit_code=$?
-
 	if [ -d ${PROJDIR} -a -f ${PROJDIR}/Makefile ]; then
 		make --silent --directory=${PROJDIR} fclean
 	fi
@@ -38,9 +38,11 @@ function cleanup {
 	if [ "${BONUS_FAIL}" != true ]; then
 		rm -f libft_bonus.out
 	fi
-	if [[ $exit_code -eq 0 ]] || [[ $exit_code -eq 3 ]]
-	then
-		rm -f run_libft* iwyu.dat valgrind.*
+	if [ "${MEMORY_FAIL}" != true ]; then
+		rm -f run_libft* valgrind.*
+	fi
+	if [ "${IWYU_FAIL}" != true ]; then
+		rm -f iwyu.dat
 	fi
 }
 
@@ -154,7 +156,8 @@ echo -e "                         ${B} ---------------------------------------- 
 echo -e "                         |                  BONUS                 |";
 echo -e "                          ---------------------------------------- ";
 make --silent --directory=${PROJDIR} bonus &> /dev/null
-if [ $? -eq 0 ]; then
+RET=$?
+if [ ${RET} -eq 0 ]; then
 	gcc -c -I${PROJDIR} test_bonus.c
 	gcc test_bonus.o -L${PROJDIR} -lft -o run_libft_bonus
 	./run_libft_bonus &> libft_bonus.out
@@ -166,7 +169,7 @@ if [ $? -eq 0 ]; then
 		echo -e "                         ${R}|                 FAILED                 |";
 		echo -e "                          ---------------------------------------- ${W}";
 	fi
-elif [ $? -eq 2 ]; then
+elif [ ${RET} -eq 2 ]; then
 	echo -e "                         ${P}|             no bonus found             |";
 	echo -e "                          ---------------------------------------- ${W}";	
 else
@@ -209,3 +212,25 @@ else
 	echo -e "                          ---------------------------------------- ${W}";	
 fi
 
+echo
+echo -e "                         ${B} ---------------------------------------- ";
+echo -e "                         |          INCLUDE WHAT YOU USE          |";
+echo -e "                          ---------------------------------------- ";
+make --silent --directory=${PROJDIR} fclean &> /dev/null
+${IWYU} --version &> /dev/null
+if [ $? -eq 0 ]; then
+	make --silent --directory=${PROJDIR} -k CC=${IWYU} 2> iwyu.dat 1> /dev/null
+	if [ -f iwyu.dat ]; then
+		if [[ -z $(cat iwyu.dat | grep -E '(add|remove)') ]]; then
+			echo -e "                         ${G}|                 PASSED                 |";
+			echo -e "                          ---------------------------------------- ${W}";
+		else
+			IWYU_FAIL=true
+			echo -e "                         ${R}|                 FAILED                 |";
+			echo -e "                          ---------------------------------------- ${W}";
+		fi
+	fi
+else
+	echo -e "                         ${Y}|     include-what-you-use not found     |";
+	echo -e "                          ---------------------------------------- ${W}";	
+fi
