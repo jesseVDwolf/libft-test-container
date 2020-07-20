@@ -29,7 +29,7 @@ fi
 
 function cleanup {
 	if [ -d ${PROJDIR} -a -f ${PROJDIR}/Makefile ]; then
-		make --silent --directory=${PROJDIR} fclean
+		make --silent --directory=${PROJDIR} fclean &> /dev/null
 	fi
 	rm -f *.o
 	if [ "${MANDATORY_FAIL}" != true ]; then
@@ -56,11 +56,11 @@ if [ "$1" = "--projdir" ]; then
 		exit 5
 	fi
 elif [ ! -d ${PROJDIR} ]; then
-	echo -e "${R}invalid project directory, use --projdir /path/to/projdir/";
+	echo -e "${R}invalid project directory, use --projdir /path/to/projdir/${W}";
 	exit 5
 elif [ -d ${PROJDIR} ]; then
 	if [ ! -f ${PROJDIR}/Makefile ]; then
-		echo -e "${R}no Makefile found in project directory";
+		echo -e "${R}no Makefile found in project directory${W}";
 		exit 5
 	fi
 fi

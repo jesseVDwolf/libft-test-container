@@ -45,9 +45,16 @@ RUN echo 'alias norminette+="python /app/norm/codam-norminette-plus/run.py"' >> 
 
 # move testers inside
 ADD testers /app/testers
-
-# configure testers to look at ../../libft directory
-RUN bash -c "/app/testers/libft/libft-war-machine/grademe.sh"
 RUN chmod +x /app/testers/libft/personal/test.sh
-RUN sed -i 's/PATH_LIBFT=..\//PATH_LIBFT=..\/..\/libft/' /app/testers/libft/libft-war-machine/my_config.sh && \
-	bash -c "sed -i $'s/LIBFTDIR\t=\t..\/libft/LIBFTDIR\t=\t..\/..\/libft/' /app/testers/libft/libft-unit-test/Makefile"
+
+# install pft 2019 tester
+RUN cd /app/testers/printf \
+	&& git clone https://github.com/gavinfielder/pft.git pft_2019 \
+	&& echo "pft_2019/" >> .gitignore \
+	&& cd pft_2019 \
+	&& rm unit_tests.c \
+	&& rm options-config.ini \
+	&& git clone https://github.com/cclaude42/PFT_2019.git temp \
+	&& cp temp/unit_tests.c . \
+	&& cp temp/options-config.ini . \
+	&& rm -rf temp
