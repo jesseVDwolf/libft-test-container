@@ -7,9 +7,6 @@
 [submodule "norm/codam-norminette-plus"]
 	path = norm/codam-norminette-plus
 	url = https://github.com/thijsdejong/codam-norminette-plus.git
-[submodule "testers/gnl/gnl-unit-test"]
-	path = testers/gnl/gnl-unit-test
-	url = https://github.com/harm-smits/gnl-unit-test
 [submodule "testers/gnl/gnl_unit_tests"]
 	path = testers/gnl/gnl_unit_tests
 	url = https://github.com/jesseVDwolf/gnl_unit_tests.git
