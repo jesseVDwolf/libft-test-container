@@ -1,13 +1,15 @@
 #!/bin/bash
 
 PROJDIR="../ft_printf"
+INCLUDES="inc"
+RESULTDIR="results"
 
 CFLAGS="-Wall -Werror -Wextra -fsanitize=address"
 UNAME_S=$(uname -s)
 NORM=$(command -v norminette)
 IWYU=$(command -v include-what-you-use)
 NORMPLUS="python /app/norm/codam-norminette-plus/run.py"
-PROJDIR="../libft"
+MAKE_FAIL=false
 MANDATORY_FAIL=false
 BONUS_FAIL=false
 MEMORY_FAIL=false
@@ -20,6 +22,7 @@ if [ $UNAME_S = Linux ]; then
 	G='\033[32m'
 	R='\033[31m'
 	W='\033[0m'
+	DIFFDIR="${INCLUDES}/diff/linux"
 elif [ $UNAME_S = Darwin ]; then
 	P='\x1b[35m'
 	B='\x1b[34m'
@@ -27,6 +30,10 @@ elif [ $UNAME_S = Darwin ]; then
 	G='\x1b[32m'
 	R='\x1b[31m'
 	W='\x1b[0m'
+	DIFFDIR="${INCLUDES}/diff/darwin"
+else
+	echo -e "unsupported OS..";
+	exit 5;
 fi
 
 function cleanup {
@@ -34,16 +41,16 @@ function cleanup {
 		make --silent --directory=${PROJDIR} fclean &> /dev/null
 	fi
 	rm -f *.o
-	if [ "${MANDATORY_FAIL}" != true ]; then
-		rm -f libft_mandatory.out
+	if [ "${MANDATORY_FAIL}" = false ]; then
+		rm -f run_*
 	fi
-	if [ "${BONUS_FAIL}" != true ]; then
+	if [ "${BONUS_FAIL}" = false ]; then
 		rm -f libft_bonus.out
 	fi
-	if [ "${MEMORY_FAIL}" != true ]; then
+	if [ "${MEMORY_FAIL}" = false ]; then
 		rm -f run_libft* valgrind.*
 	fi
-	if [ "${IWYU_FAIL}" != true ]; then
+	if [ "${IWYU_FAIL}" = false ]; then
 		rm -f iwyu.dat
 	fi
 }
@@ -58,6 +65,7 @@ if [ "$1" = "--projdir" ]; then
 		exit 5
 	fi
 elif [ ! -d ${PROJDIR} ]; then
+	echo -e "${PROJDIR}";
 	echo -e "${R}invalid project directory, use --projdir /path/to/projdir/${W}";
 	exit 5
 elif [ -d ${PROJDIR} ]; then
@@ -143,4 +151,108 @@ else
 	echo -e "                          ---------------------------------------- ${W}";
 fi
 
+echo
+echo -e "                         ${B} ---------------------------------------- ";
+echo -e "                         |              main_general              |";
+echo -e "                          ---------------------------------------- ";
+make --silent --directory=${PROJDIR} &> /dev/null
+if [ $? -eq 0 ]; then
+	gcc ${INCLUDES}/main_general.c -o run_main_general -L${PROJDIR} -lftprintf &> /dev/null
+	./run_main_general &> ${RESULTDIR}/your_main_general.out
+	diff --suppress-common-lines -y ${RESULTDIR}/your_main_general.out ${DIFFDIR}/our_main_general.out) | cat -n | grep -v -e '($' > ${RESULTDIR}/diff_main_char
+else
+	echo -e "                         ${R}|          failed to make project        |";
+	echo -e "                          ---------------------------------------- ${W}";
+	MAKE_FAIL=true
+	exit 5
+fi
 
+echo
+echo -e "                         ${B} ---------------------------------------- ";
+echo -e "                         |                main_char               |";
+echo -e "                          ---------------------------------------- ";
+make --silent --directory=${PROJDIR} &> /dev/null
+if [ $? -eq 0 ]; then
+	gcc ${INCLUDES}/main_char.c -o run_main_char -L${PROJDIR} -lftprintf &> /dev/null
+	./run_main_char &> ${RESULTDIR}/your_main_char.out
+else
+	echo -e "                         ${R}|          failed to make project        |";
+	echo -e "                          ---------------------------------------- ${W}";
+	MAKE_FAIL=true
+	exit 5
+fi
+
+echo
+echo -e "                         ${B} ---------------------------------------- ";
+echo -e "                         |                main_pct                |";
+echo -e "                          ---------------------------------------- ";
+make --silent --directory=${PROJDIR} &> /dev/null
+if [ $? -eq 0 ]; then
+	gcc ${INCLUDES}/main_pct.c -o run_main_pct -L${PROJDIR} -lftprintf &> /dev/null
+	./run_main_pct &> ${RESULTDIR}/your_main_pct.out
+else
+	echo -e "                         ${R}|          failed to make project        |";
+	echo -e "                          ---------------------------------------- ${W}";
+	MAKE_FAIL=true
+	exit 5
+fi
+
+echo
+echo -e "                         ${B} ---------------------------------------- ";
+echo -e "                         |                main_ptr                |";
+echo -e "                          ---------------------------------------- ";
+make --silent --directory=${PROJDIR} &> /dev/null
+if [ $? -eq 0 ]; then
+	gcc ${INCLUDES}/main_ptr.c -o run_main_ptr -L${PROJDIR} -lftprintf &> /dev/null
+	./run_main_ptr &> ${RESULTDIR}/your_main_ptr.out
+else
+	echo -e "                         ${R}|          failed to make project        |";
+	echo -e "                          ---------------------------------------- ${W}";
+	MAKE_FAIL=true
+	exit 5
+fi
+
+echo
+echo -e "                         ${B} ---------------------------------------- ";
+echo -e "                         |                main_str                |";
+echo -e "                          ---------------------------------------- ";
+make --silent --directory=${PROJDIR} &> /dev/null
+if [ $? -eq 0 ]; then
+	gcc ${INCLUDES}/main_str.c -o run_main_str -L${PROJDIR} -lftprintf &> /dev/null
+	./run_main_str &> ${RESULTDIR}/your_main_str.out
+else
+	echo -e "                         ${R}|          failed to make project        |";
+	echo -e "                          ---------------------------------------- ${W}";
+	MAKE_FAIL=true
+	exit 5
+fi
+
+echo
+echo -e "                         ${B} ---------------------------------------- ";
+echo -e "                         |             main_hexa_lower            |";
+echo -e "                          ---------------------------------------- ";
+make --silent --directory=${PROJDIR} &> /dev/null
+if [ $? -eq 0 ]; then
+	gcc ${INCLUDES}/main_hexa_lower.c -o run_main_hexa_lower -L${PROJDIR} -lftprintf &> /dev/null
+	./run_main_hexa_lower &> ${RESULTDIR}/your_main_hexa_lower.out
+else
+	echo -e "                         ${R}|          failed to make project        |";
+	echo -e "                          ---------------------------------------- ${W}";
+	MAKE_FAIL=true
+	exit 5
+fi
+
+echo
+echo -e "                         ${B} ---------------------------------------- ";
+echo -e "                         |              main_unsigned             |";
+echo -e "                          ---------------------------------------- ";
+make --silent --directory=${PROJDIR} &> /dev/null
+if [ $? -eq 0 ]; then
+	gcc ${INCLUDES}/main_unsigned.c -o run_main_unsigned -L${PROJDIR} -lftprintf &> /dev/null
+	./run_main_unsigned &> ${RESULTDIR}/your_main_unsigned.out
+else
+	echo -e "                         ${R}|          failed to make project        |";
+	echo -e "                          ---------------------------------------- ${W}";
+	MAKE_FAIL=true
+	exit 5
+fi
