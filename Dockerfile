@@ -61,7 +61,9 @@ RUN echo 'alias norminette+="python /app/norm/codam-norminette-plus/run.py"' >> 
 # move testers inside
 ADD testers /app/testers
 RUN chmod +x /app/testers/libft/personal/test.sh \
-	&& sed -i -e 's/-Werror//' /app/testers/libft/libft-unit-test/Makefile
+	&& sed -i -e 's/-Werror//' /app/testers/libft/libft-unit-test/Makefile \
+	&& chmod +x /app/testers/gnl/gnl_unit_tests/run_tests.sh \
+	&& chmod +x /app/testers/printf/personal/test.sh
 
 # install pft 2019 tester
 RUN cd /app/testers/printf \
