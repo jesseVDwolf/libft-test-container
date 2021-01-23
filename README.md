@@ -43,7 +43,7 @@ testers that are available. They can be found in */app/testers/\<project>*
 
 ### *libft-unit-test adding "rule"*
 *Note* The following assumes you've set $(NAME) as the name of your
-library, in this case libft. Also, $(SRC_O) and $(BONUS_O) refer to
+library, in this case "libft.a". Also, $(SRC_O) and $(BONUS_O) refer to
 your sources files in .o form
 ```make
 $(SRC_O) = $(SRC:.c=.o)
