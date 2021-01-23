@@ -42,8 +42,15 @@ testers that are available. They can be found in */app/testers/\<project>*
 | personal          | Personalized tests made during own development process                      | -                                           |
 
 ### *libft-unit-test adding "rule"*
-Add the following to your makefile:
+*Note* The following assumes you've set $(NAME) as the name of your
+library, in this case libft. Also, $(SRC_O) and $(BONUS_O) refer to
+your sources files in .o form
+```make
+$(SRC_O) = $(SRC:.c=.o)
+$(BONUS_O) = $(BONUS:.c=.o)
 ```
+Add the following to your makefile:
+```make
 so: $(NAME:.a=.so)
 
 $(NAME:.a=.so): $(SRC_O) $(BONUS_O)
@@ -59,4 +66,4 @@ $(NAME:.a=.so): $(SRC_O) $(BONUS_O)
 | Test     | Notes                                                  | Link                                  |
 |----------|--------------------------------------------------------|---------------------------------------|
 | PFT_2019 | Edit the "options-config.ini" LIBFTPRINTF_DIR variable | https://github.com/cclaude42/PFT_2019 |
-| Personal | -- Under construction --                               | -                                     |
+| Personal | Personalized tests using Lindsey's crazy test cannon   | -                                     |

@@ -159,7 +159,9 @@ make --silent --directory=${PROJDIR} &> /dev/null
 if [ $? -eq 0 ]; then
 	gcc ${INCLUDES}/main_general.c -o run_main_general -L${PROJDIR} -lftprintf &> /dev/null
 	./run_main_general &> ${RESULTDIR}/your_main_general.out
-	diff --suppress-common-lines -y ${RESULTDIR}/your_main_general.out ${DIFFDIR}/our_main_general.out) | cat -n | grep -v -e '($' > ${RESULTDIR}/diff_main_char
+	diff --suppress-common-lines -y ${RESULTDIR}/your_main_general.out ${DIFFDIR}/our_main_general.out | cat -n | grep -v -e '($' > ${RESULTDIR}/diff_main_char
+	echo -e "                         ${Y}|  in ${RESULTDIR}/your_main_general.out |";
+	echo -e "                          ---------------------------------------- ${W}";
 else
 	echo -e "                         ${R}|          failed to make project        |";
 	echo -e "                          ---------------------------------------- ${W}";
@@ -175,6 +177,8 @@ make --silent --directory=${PROJDIR} &> /dev/null
 if [ $? -eq 0 ]; then
 	gcc ${INCLUDES}/main_char.c -o run_main_char -L${PROJDIR} -lftprintf &> /dev/null
 	./run_main_char &> ${RESULTDIR}/your_main_char.out
+	echo -e "                         ${Y}|   in ${RESULTDIR}/your_main_char.out   |";
+	echo -e "                          ---------------------------------------- ${W}";
 else
 	echo -e "                         ${R}|          failed to make project        |";
 	echo -e "                          ---------------------------------------- ${W}";
@@ -190,6 +194,8 @@ make --silent --directory=${PROJDIR} &> /dev/null
 if [ $? -eq 0 ]; then
 	gcc ${INCLUDES}/main_pct.c -o run_main_pct -L${PROJDIR} -lftprintf &> /dev/null
 	./run_main_pct &> ${RESULTDIR}/your_main_pct.out
+	echo -e "                         ${Y}|   in ${RESULTDIR}/your_main_pct.out    |";
+	echo -e "                          ---------------------------------------- ${W}";
 else
 	echo -e "                         ${R}|          failed to make project        |";
 	echo -e "                          ---------------------------------------- ${W}";
@@ -205,6 +211,8 @@ make --silent --directory=${PROJDIR} &> /dev/null
 if [ $? -eq 0 ]; then
 	gcc ${INCLUDES}/main_ptr.c -o run_main_ptr -L${PROJDIR} -lftprintf &> /dev/null
 	./run_main_ptr &> ${RESULTDIR}/your_main_ptr.out
+	echo -e "                         ${Y}|   in ${RESULTDIR}/your_main_ptr.out    |";
+	echo -e "                          ---------------------------------------- ${W}";
 else
 	echo -e "                         ${R}|          failed to make project        |";
 	echo -e "                          ---------------------------------------- ${W}";
@@ -220,6 +228,8 @@ make --silent --directory=${PROJDIR} &> /dev/null
 if [ $? -eq 0 ]; then
 	gcc ${INCLUDES}/main_str.c -o run_main_str -L${PROJDIR} -lftprintf &> /dev/null
 	./run_main_str &> ${RESULTDIR}/your_main_str.out
+	echo -e "                         ${Y}|   in ${RESULTDIR}/your_main_str.out    |";
+	echo -e "                          ---------------------------------------- ${W}";
 else
 	echo -e "                         ${R}|          failed to make project        |";
 	echo -e "                          ---------------------------------------- ${W}";
@@ -235,6 +245,8 @@ make --silent --directory=${PROJDIR} &> /dev/null
 if [ $? -eq 0 ]; then
 	gcc ${INCLUDES}/main_hexa_lower.c -o run_main_hexa_lower -L${PROJDIR} -lftprintf &> /dev/null
 	./run_main_hexa_lower &> ${RESULTDIR}/your_main_hexa_lower.out
+	echo -e "                         ${Y}|in ${RESULTDIR}/your_main_hexa_lower.out|";
+	echo -e "                          ---------------------------------------- ${W}";
 else
 	echo -e "                         ${R}|          failed to make project        |";
 	echo -e "                          ---------------------------------------- ${W}";
@@ -250,6 +262,8 @@ make --silent --directory=${PROJDIR} &> /dev/null
 if [ $? -eq 0 ]; then
 	gcc ${INCLUDES}/main_unsigned.c -o run_main_unsigned -L${PROJDIR} -lftprintf &> /dev/null
 	./run_main_unsigned &> ${RESULTDIR}/your_main_unsigned.out
+	echo -e "                         ${Y}| in ${RESULTDIR}/your_main_unsigned.out |";
+	echo -e "                          ---------------------------------------- ${W}";
 else
 	echo -e "                         ${R}|          failed to make project        |";
 	echo -e "                          ---------------------------------------- ${W}";
