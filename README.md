@@ -2,15 +2,15 @@
 
 A container with external testers and personal tests. It also includes the norminette, [norminetteplus](https://github.com/thijsdejong/codam-norminette-plus), valgrind and [include-what-you-use](https://github.com/include-what-you-use/include-what-you-use/tree/clang_9.0) to check for additional errors. Also, vim and emacs
 have also already been preinstalled.
-> :warning: **Import note: this tester uses git submodules. Make sure to clone this repository with --recurse-submodules so that all external testers are also retrieved successfully. Also, some external testers may still have to be configured. Look at these testers their own configurations using the links provided in this README**
+> :warning: **Import note: this tester uses git submodules. If you're cloning this repository, make sure to clone it with --recurse-submodules so that all external testers are also retrieved successfully. Also, some external testers may still have to be configured. Look at these testers their own configurations using the links provided in this README**
 
-Easiest way to install it is to pull it directly from [docker.io](https://hub.docker.com/r/jessevdwolf/libft-test-container):
+The easiest way to install it is to pull it directly from [docker.io](https://hub.docker.com/r/jessevdwolf/libft-test-container):
 ```bash
 > docker pull jessevdwolf/libft-test-container
 ```
 
 ## Usage
-Build the image (Make sure you are in the same directory as the Dockerfile):
+If you're not pulling directory from docker.io, you can build the image manually (Make sure you are in the same directory as the Dockerfile):
 ```bash
 > docker build -t libft-test-container .
 ```
